@@ -20,14 +20,14 @@ data "terraform_remote_state" "test" {
 }
 
 data "tfe_workspace" "my-ws" {
-  name         = "tf-random-pet-remote-state"
-  organization = "atanas-free"
+  name         = "test-remote-tf-state"
+  organization = "atanas"
 }
 
 resource "tfe_variable" "test" {
   key          = "my_key_name"
   value        = data.terraform_remote_state.test.outputs.ext-id
   category     = "terraform"
-  workspace_id = tfe_workspace.test.id
+  workspace_id = data.tfe_workspace.my-ws.id
   description  = "test variable"
 }
